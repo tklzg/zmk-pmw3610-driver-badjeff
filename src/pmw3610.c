@@ -552,8 +552,27 @@ static int pmw3610_report_data(const struct device *dev) {
 // adapted from https://stackoverflow.com/questions/70802306/convert-a-12-bit-signed-number-in-c
 #define TOINT16(val, bits) (((struct { int16_t value : bits; }){val}).value)
 
-    int16_t x = TOINT16((buf[PMW3610_X_L_POS] + ((buf[PMW3610_XY_H_POS] & 0xF0) << 4)), 12);
-    int16_t y = TOINT16((buf[PMW3610_Y_L_POS] + ((buf[PMW3610_XY_H_POS] & 0x0F) << 8)), 12);
+    int16_t raw_x = TOINT16((buf[PMW3610_X_L_POS] + ((buf[PMW3610_XY_H_POS] & 0xF0) << 4)), 12);
+    int16_t raw_y = TOINT16((buf[PMW3610_Y_L_POS] + ((buf[PMW3610_XY_H_POS] & 0x0F) << 8)), 12);
+
+    int16_t x;
+    int16_t y;
+
+    double radian;
+    if(CONFIG_PMW3610_ANGLE > 0)
+    {
+        radian = (double)CONFIG_PMW3610_ANGLE * 0.0174533;
+        x = ((double)raw_x * (double)cos(radian)) - ((double)raw_y * (double)sin(radian));
+        y = ((double)raw_x * (double)sin(radian)) + ((double)raw_y * (double)cos(radian));
+
+        y = -y;
+    }
+    else{
+        x = raw_x;
+        y= raw_y;
+    }
+
+    /*
 
 #if IS_ENABLED(CONFIG_PMW3610_SWAP_XY)
     int16_t a = x;
@@ -566,6 +585,7 @@ static int pmw3610_report_data(const struct device *dev) {
 #if IS_ENABLED(CONFIG_PMW3610_INVERT_Y)
     y = -y;
 #endif
+*/
 
 #ifdef CONFIG_PMW3610_SMART_ALGORITHM
     int16_t shutter = ((int16_t)(buf[PMW3610_SHUTTER_H_POS] & 0x01) << 8) 
