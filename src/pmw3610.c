@@ -586,7 +586,7 @@ static int pmw3610_report_data(const struct device *dev) {
     y = -y;
 #endif
 
-#ifdef 
+#ifdef CONFIG_PMW3610_SMART_ALGORITHM
     int16_t shutter = ((int16_t)(buf[PMW3610_SHUTTER_H_POS] & 0x01) << 8) 
                     + buf[PMW3610_SHUTTER_L_POS];
     if (data->sw_smart_flag && shutter < 45) {
