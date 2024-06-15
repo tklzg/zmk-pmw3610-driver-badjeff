@@ -585,7 +585,7 @@ static int pmw3610_report_data(const struct device *dev) {
 #if IS_ENABLED(CONFIG_PMW3610_INVERT_Y)
     y = -y;
 #endif
-
+ddd
 #ifdef CONFIG_PMW3610_SMART_ALGORITHM
     int16_t shutter = ((int16_t)(buf[PMW3610_SHUTTER_H_POS] & 0x01) << 8) 
                     + buf[PMW3610_SHUTTER_L_POS];
