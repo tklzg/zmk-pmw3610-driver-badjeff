@@ -324,7 +324,7 @@ static int set_downshift_time(const struct device *dev, uint8_t reg_addr, uint32
     uint32_t maxtime;
     uint32_t mintime;
 
-    LOG_DBG("set_downshift_time !!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    LOG_INF("set_downshift_time !!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
     switch (reg_addr) {
     case PMW3610_REG_RUN_DOWNSHIFT:
@@ -790,7 +790,7 @@ static const struct sensor_driver_api pmw3610_driver_api = {
 };
 
 static int pwm3610_pm_action(const struct device *dev, enum pm_device_action action) {
-    LOG_DBG("pwm3610_pm_action !!!!!!!!!!!!!!!!!!!!!!");
+    LOG_INF("pwm3610_pm_action !!!!!!!!!!!!!!!!!!!!!!");
     switch (action) {
     case PM_DEVICE_ACTION_RESUME:
         return 0;
