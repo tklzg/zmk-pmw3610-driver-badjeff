@@ -792,13 +792,11 @@ static const struct sensor_driver_api pmw3610_driver_api = {
 static int pwm3610_pm_action(const struct device *dev, enum pm_device_action action) {
     const struct pixart_config *config = dev->config;
     struct pixart_data *data = dev->data;
-    LOG_INF("pwm3610_pm_action !!!!!!!!!!!!!!!!!!!!!!");
     switch (action) {
     case PM_DEVICE_ACTION_RESUME:
         return 0;
     case PM_DEVICE_ACTION_SUSPEND:
         set_interrupt(dev, false);
-        //gpio_remove_callback(config->irq_gpio.port, &data->irq_gpio_cb);
         gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
         return 0;
     default:
