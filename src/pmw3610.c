@@ -800,7 +800,7 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     case PM_DEVICE_ACTION_RESUME:
         return 0;
     case PM_DEVICE_ACTION_SUSPEND:
-        gpio_pin_set_dt(&config->cs_gpio, (int)0);
+        err = gpio_pin_configure_dt(&config->cs_gpio, GPIO_INPUT);
         return 0;
     default:
         return -ENOTSUP;
