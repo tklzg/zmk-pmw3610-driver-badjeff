@@ -324,8 +324,6 @@ static int set_downshift_time(const struct device *dev, uint8_t reg_addr, uint32
     uint32_t maxtime;
     uint32_t mintime;
 
-    LOG_INF("set_downshift_time !!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
     switch (reg_addr) {
     case PMW3610_REG_RUN_DOWNSHIFT:
         /*
