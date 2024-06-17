@@ -785,6 +785,20 @@ static const struct sensor_driver_api pmw3610_driver_api = {
     .attr_set = pmw3610_attr_set,
 };
 
+static int pwm3610_pm_action(const struct device *dev, enum pm_device_action action) {
+    LOG_DBG("pwm3610_pm_action !!!!!!!!!!!!!!!!!!!!!!");
+    switch (action) {
+    case PM_DEVICE_ACTION_RESUME:
+        return 0;
+    case PM_DEVICE_ACTION_SUSPEND:
+        return 0;
+    default:
+        return -ENOTSUP;
+    }
+}
+
+PM_DEVICE_DT_INST_DEFINE(0, pwm3610_pm_action);
+
 #define PMW3610_DEFINE(n)                                                                          \
     static struct pixart_data data##n;                                                             \
     static const struct pixart_config config##n = {                                                \
