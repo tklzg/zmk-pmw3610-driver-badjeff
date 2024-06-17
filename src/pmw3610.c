@@ -795,6 +795,7 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     case PM_DEVICE_ACTION_RESUME:
         return 0;
     case PM_DEVICE_ACTION_SUSPEND:
+        spi_cs_ctrl(dev, false);
         return 0;
     default:
         return -ENOTSUP;
