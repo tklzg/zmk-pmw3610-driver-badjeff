@@ -12,6 +12,7 @@
 #include <zmk/keymap.h>
 #include "pmw3610.h"
 #include <zephyr/pm/device.h>
+#include <zephyr/pm/pm.h>
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(pmw3610, CONFIG_PMW3610_LOG_LEVEL);
