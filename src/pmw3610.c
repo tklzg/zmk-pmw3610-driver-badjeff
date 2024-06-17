@@ -807,7 +807,7 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     }
 }
 
-PM_DEVICE_DT_INST_DEFINE(0, pwm3610_pm_action);
+PM_DEVICE_DT_INST_DEFINE(n, pwm3610_pm_action);
 
 #define PMW3610_DEFINE(n)                                                                          \
     static struct pixart_data data##n;                                                             \
@@ -836,7 +836,7 @@ PM_DEVICE_DT_INST_DEFINE(0, pwm3610_pm_action);
         .y_input_code = DT_PROP(DT_DRV_INST(n), y_input_code),                                     \
     };                                                                                             \
                                                                                                    \
-    DEVICE_DT_INST_DEFINE(n, pmw3610_init, NULL, &data##n, &config##n, POST_KERNEL,                \
+    DEVICE_DT_INST_DEFINE(n, pmw3610_init, PM_DEVICE_DT_INST_GET(n), &data##n, &config##n, POST_KERNEL,                \
                           CONFIG_SENSOR_INIT_PRIORITY, &pmw3610_driver_api);
 
 DT_INST_FOREACH_STATUS_OKAY(PMW3610_DEFINE)
