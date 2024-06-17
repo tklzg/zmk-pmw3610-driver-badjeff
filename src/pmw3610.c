@@ -11,6 +11,8 @@
 #include <zephyr/input/input.h>
 #include <zmk/keymap.h>
 #include "pmw3610.h"
+#include <zephyr/pm/device.h>
+#include <zephyr/pm/pm.h>
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(pmw3610, CONFIG_PMW3610_LOG_LEVEL);
@@ -321,6 +323,8 @@ static int set_sample_time(const struct device *dev, uint8_t reg_addr, uint32_t 
 static int set_downshift_time(const struct device *dev, uint8_t reg_addr, uint32_t time) {
     uint32_t maxtime;
     uint32_t mintime;
+
+    LOG_INF("set_downshift_time !!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
     switch (reg_addr) {
     case PMW3610_REG_RUN_DOWNSHIFT:
@@ -785,6 +789,21 @@ static const struct sensor_driver_api pmw3610_driver_api = {
     .attr_set = pmw3610_attr_set,
 };
 
+static int pwm3610_pm_action(const struct device *dev, enum pm_device_action action) {
+    const struct pixart_config *config = dev->config;
+    struct pixart_data *data = dev->data;
+    switch (action) {
+    case PM_DEVICE_ACTION_RESUME:
+        return 0;
+    case PM_DEVICE_ACTION_SUSPEND:
+        set_interrupt(dev, false);
+        gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
+        return 0;
+    default:
+        return -ENOTSUP;
+    }
+}
+
 #define PMW3610_DEFINE(n)                                                                          \
     static struct pixart_data data##n;                                                             \
     static const struct pixart_config config##n = {                                                \
@@ -811,8 +830,8 @@ static const struct sensor_driver_api pmw3610_driver_api = {
         .x_input_code = DT_PROP(DT_DRV_INST(n), x_input_code),                                     \
         .y_input_code = DT_PROP(DT_DRV_INST(n), y_input_code),                                     \
     };                                                                                             \
-                                                                                                   \
-    DEVICE_DT_INST_DEFINE(n, pmw3610_init, NULL, &data##n, &config##n, POST_KERNEL,                \
+    PM_DEVICE_DT_INST_DEFINE(n, pwm3610_pm_action);                                                                                               \
+    DEVICE_DT_INST_DEFINE(n, pmw3610_init, PM_DEVICE_DT_INST_GET(n), &data##n, &config##n, POST_KERNEL,                \
                           CONFIG_SENSOR_INIT_PRIORITY, &pmw3610_driver_api);
 
 DT_INST_FOREACH_STATUS_OKAY(PMW3610_DEFINE)
