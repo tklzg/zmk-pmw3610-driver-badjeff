@@ -803,8 +803,6 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     }
 }
 
-PM_DEVICE_DT_INST_DEFINE(n, pwm3610_pm_action);
-
 #define PMW3610_DEFINE(n)                                                                          \
     static struct pixart_data data##n;                                                             \
     static const struct pixart_config config##n = {                                                \
