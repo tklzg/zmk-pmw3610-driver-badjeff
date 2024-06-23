@@ -324,8 +324,6 @@ static int set_downshift_time(const struct device *dev, uint8_t reg_addr, uint32
     uint32_t maxtime;
     uint32_t mintime;
 
-    return 0;
-
     switch (reg_addr) {
     case PMW3610_REG_RUN_DOWNSHIFT:
         /*
@@ -466,7 +464,7 @@ static int pmw3610_async_init_configure(const struct device *dev) {
     //     err = reg_write(dev, PMW3610_REG_PERFORMANCE, perf);
     //     LOG_INF("Set performance register (reg value 0x%x)", perf);
     // }
-
+/*
     if (!err) {
         err = set_downshift_time(dev, PMW3610_REG_RUN_DOWNSHIFT,
                                  CONFIG_PMW3610_RUN_DOWNSHIFT_TIME_MS);
@@ -496,7 +494,7 @@ static int pmw3610_async_init_configure(const struct device *dev) {
         err = set_sample_time(dev, PMW3610_REG_REST3_RATE,
                               CONFIG_PMW3610_REST3_SAMPLE_TIME_MS);
     }
-
+*/
     if (err) {
         LOG_ERR("Config the sensor failed");
         return err;
@@ -752,7 +750,7 @@ static int pmw3610_attr_set(const struct device *dev, enum sensor_channel chan,
     case PMW3610_ATTR_CPI:
         err = set_cpi(dev, PMW3610_SVALUE_TO_CPI(*val));
         break;
-
+        /*
     case PMW3610_ATTR_RUN_DOWNSHIFT_TIME:
         err = set_downshift_time(dev, PMW3610_REG_RUN_DOWNSHIFT, PMW3610_SVALUE_TO_TIME(*val));
         break;
@@ -776,6 +774,7 @@ static int pmw3610_attr_set(const struct device *dev, enum sensor_channel chan,
     case PMW3610_ATTR_REST3_SAMPLE_TIME:
         err = set_sample_time(dev, PMW3610_REG_REST3_RATE, PMW3610_SVALUE_TO_TIME(*val));
         break;
+        */
 
     default:
         LOG_ERR("Unknown attribute");
