@@ -47,7 +47,7 @@ config PMW3610_SMART_ALGORITHM
 
 config PMW3610_RUN_DOWNSHIFT_TIME_MS
     int "PMW3610's default RUN mode downshift time"
-    default 128
+    default 3200
     range 13 3264
     help
       Default RUN mode downshift down time in milliseconds.

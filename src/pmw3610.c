@@ -464,7 +464,7 @@ static int pmw3610_async_init_configure(const struct device *dev) {
     //     err = reg_write(dev, PMW3610_REG_PERFORMANCE, perf);
     //     LOG_INF("Set performance register (reg value 0x%x)", perf);
     // }
-/*
+
     if (!err) {
         err = set_downshift_time(dev, PMW3610_REG_RUN_DOWNSHIFT,
                                  CONFIG_PMW3610_RUN_DOWNSHIFT_TIME_MS);
@@ -494,7 +494,7 @@ static int pmw3610_async_init_configure(const struct device *dev) {
         err = set_sample_time(dev, PMW3610_REG_REST3_RATE,
                               CONFIG_PMW3610_REST3_SAMPLE_TIME_MS);
     }
-*/
+
     if (err) {
         LOG_ERR("Config the sensor failed");
         return err;
