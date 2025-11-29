@@ -793,8 +793,10 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     struct pixart_data *data = dev->data;
     switch (action) {
     case PM_DEVICE_ACTION_RESUME:
+    LOG_INF("PMW3610 Resume");
         return 0;
     case PM_DEVICE_ACTION_SUSPEND:
+    LOG_INF("PMW3610 Suspend");
         //set_interrupt(dev, false);
         //gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
         return 0;
