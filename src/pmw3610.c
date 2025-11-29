@@ -795,12 +795,14 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     case PM_DEVICE_ACTION_RESUME:
     LOG_INF("PMW3610 Resume");
     LOG_ERR("PMW3610 Resume");
+    set_interrupt(dev, true);
+        gpio_pin_configure_dt(&config->irq_gpio, GPIO_INPUT);
         return 0;
     case PM_DEVICE_ACTION_SUSPEND:
     LOG_INF("PMW3610 Suspend");
     LOG_ERR("PMW3610 Suspend");
-        //set_interrupt(dev, false);
-        //gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
+        set_interrupt(dev, false);
+        gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
         return 0;
     default:
         return -ENOTSUP;
