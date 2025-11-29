@@ -518,7 +518,7 @@ static void pmw3610_async_init(struct k_work *work) {
 
         if (data->async_init_step == ASYNC_INIT_STEP_COUNT) {
             data->ready = true; // sensor is ready to work
-            LOG_INF("PMW3610 initialized6");
+            LOG_INF("PMW3610 initialized");
             set_interrupt(dev, true);
         } else {
             k_work_schedule(&data->init_work, K_MSEC(async_init_delay[data->async_init_step]));
