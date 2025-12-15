@@ -842,7 +842,7 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
         .x_input_code = DT_PROP(DT_DRV_INST(n), x_input_code),                                     \
         .y_input_code = DT_PROP(DT_DRV_INST(n), y_input_code),                                     \
     };                                                                                             \
-    PM_DEVICE_DT_INST_DEFINE(n, pwm3610_pm_action);                                                                                               \
+    PM_DEVICE_DT_INST_DEFINE(n, pwm3610_pm_action);                                                 \
     DEVICE_DT_INST_DEFINE(n, pmw3610_init, PM_DEVICE_DT_INST_GET(n), &data##n, &config##n, POST_KERNEL,                \
                           CONFIG_SENSOR_INIT_PRIORITY, &pmw3610_driver_api);
 
