@@ -788,13 +788,15 @@ static const struct sensor_driver_api pmw3610_driver_api = {
     .attr_set = pmw3610_attr_set,
 };
 
-static int pwm3610_pm_action(const struct device *dev, enum pm_device_action action) {
+static int pmw3610_pm_action(const struct device *dev, enum pm_device_action action) {
     const struct pixart_config *config = dev->config;
     struct pixart_data *data = dev->data;
     switch (action) {
     case PM_DEVICE_ACTION_RESUME:
     LOG_INF("PMW3610 Resume");
     LOG_ERR("PMW3610 Resume");
+
+    set_interrupt(dev, true);
 
     gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_INACTIVE);
 
@@ -806,9 +808,12 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
     case PM_DEVICE_ACTION_SUSPEND:
     LOG_INF("PMW3610 Suspend");
     LOG_ERR("PMW3610 Suspend");
+    
+    set_interrupt(dev, false);
+
     reg_write(dev, PMW3610_REG_SHUTDOWN, SHUTDOWN_ENABLE);
 
-        //set_interrupt(dev, false);
+        
         gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
         return 0;
     default:
@@ -842,7 +847,7 @@ static int pwm3610_pm_action(const struct device *dev, enum pm_device_action act
         .x_input_code = DT_PROP(DT_DRV_INST(n), x_input_code),                                     \
         .y_input_code = DT_PROP(DT_DRV_INST(n), y_input_code),                                     \
     };                                                                                             \
-    PM_DEVICE_DT_INST_DEFINE(n, pwm3610_pm_action);                                                 \
+    PM_DEVICE_DT_INST_DEFINE(n, pmw3610_pm_action);                                                 \
     DEVICE_DT_INST_DEFINE(n, pmw3610_init, PM_DEVICE_DT_INST_GET(n), &data##n, &config##n, POST_KERNEL,                \
                           CONFIG_SENSOR_INIT_PRIORITY, &pmw3610_driver_api);
 
