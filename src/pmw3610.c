@@ -814,7 +814,7 @@ static int pmw3610_pm_action(const struct device *dev, enum pm_device_action act
     reg_write(dev, PMW3610_REG_SHUTDOWN, SHUTDOWN_ENABLE);
 
         
-        //gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
+        gpio_pin_configure_dt(&config->cs_gpio, GPIO_OUTPUT_LOW);
         return 0;
     default:
         return -ENOTSUP;
